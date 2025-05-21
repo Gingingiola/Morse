@@ -11,5 +11,5 @@
 ## [Laboratorio](https://gingingiola.github.io/Morse/lab/index.html)  
 
 ## Laboratorio interattivo sul sistema Telegrafico bidirezionale 
-
+ 
 ## [Circuito](https://gingingiola.github.io/Morse/circuito.html)
