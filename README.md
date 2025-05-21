@@ -2,7 +2,7 @@
 
 ## Il codice Morse: le basi del linguaggio macchina.
 
-### Questa ricerca include una ricerca teorica e un laboratorio interattivo concepiti per approfondire e sperimentare il funzionamento del Codice Morse, e la sua relazione con il Codice ASCII, i circuiti elettrici e l'algebra booleana. 
+### Questa ricerca include un pdf teorico e un laboratorio interattivo concepiti per approfondire e sperimentare il funzionamento del Codice Morse, e la sua relazione con il Codice ASCII, i circuiti elettrici e l'algebra booleana. 
 
 ## [Morse.pdf](Morse.pdf)  
 
