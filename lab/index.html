@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: white; 
+            background-color: white;
             color: #151228; /* Testo principale */
         }
         /* Custom scrollbar for textareas */
@@ -100,7 +100,7 @@
             -webkit-appearance: none; /* Rimuove lo stile predefinito di WebKit */
             width: 100%;
             height: 8px; /* Altezza della barra */
-            background: #e2e8f0; /* Colore della traccia di sfondo */
+            background: #e2e8f0; /* Colore della traccia di sfondo (la parte a destra del pallino) */
             border-radius: 5px;
             outline: none;
             cursor: pointer;
@@ -112,7 +112,7 @@
             -webkit-appearance: none;
             width: 20px; /* Dimensione del pallino */
             height: 20px; /* Dimensione del pallino */
-            background: #151228; /* Colore del testo principale */
+            background: #151228; /* Colore del pallino impostato sul nero del testo */
             border-radius: 50%; /* Rende il pallino circolare */
             border: none;
             cursor: pointer;
@@ -122,21 +122,22 @@
         }
 
         input[type="range"]::-webkit-slider-thumb:hover {
-            background: #2f2723; /* Un po' più scuro all'hover */
+            background: #2f2723; /* Tonalità leggermente più scura all'hover */
         }
 
         /* Stile della "traccia riempita" (il colore a sinistra del pallino) per WebKit */
         input[type="range"]::-webkit-slider-runnable-track {
-            background: linear-gradient(to right, #151228 var(--track-fill-percent, 0%), #e2e8f0 var(--track-fill-percent, 0%));
             height: 8px;
             border-radius: 5px;
+            /* Questo linear-gradient crea la parte "riempita" a sinistra e la parte "non riempita" a destra */
+            background: linear-gradient(to right, #151228 var(--track-fill-percent, 0%), #e2e8f0 var(--track-fill-percent, 0%));
         }
 
         /* Stile del "thumb" (il pallino) per Firefox */
         input[type="range"]::-moz-range-thumb {
             width: 20px;
             height: 20px;
-            background: #151228; /* Colore del testo principale */
+            background: #151228; /* Colore del pallino impostato sul nero del testo */
             border-radius: 50%;
             border: none;
             cursor: pointer;
@@ -145,19 +146,17 @@
         }
 
         input[type="range"]::-moz-range-thumb:hover {
-            background: #2f2723; /* Un po' più scuro all'hover */
+            background: #2f2723; /* Tonalità leggermente più scura all'hover */
         }
 
-        /* Stile della "traccia" per Firefox */
+        /* Stile della "traccia" per Firefox (lo sfondo generale) */
         input[type="range"]::-moz-range-track {
             background: #e2e8f0; /* Colore della traccia di sfondo */
             height: 8px;
             border-radius: 5px;
         }
 
-        /* Stile della "traccia riempita" per Firefox (simulazione) */
-        /* Questo è più difficile in Firefox, richiede JavaScript per un riempimento accurato
-           o un hack con `background: linear-gradient` sul track generale e l'impostazione di `--track-fill-percent` via JS. */
+        /* Stile della "traccia riempita" per Firefox */
         input[type="range"]::-moz-range-progress {
             background-color: #151228; /* Colore di riempimento per la parte a sinistra del thumb */
             height: 8px;
@@ -168,7 +167,7 @@
         input[type="range"]::-ms-thumb {
             width: 20px;
             height: 20px;
-            background: #151228; /* Colore del testo principale */
+            background: #151228; /* Colore del pallino impostato sul nero del testo */
             border-radius: 50%;
             border: none;
             cursor: pointer;
@@ -177,7 +176,7 @@
         }
 
         input[type="range"]::-ms-thumb:hover {
-            background: #2f2723; /* Un po' più scuro all'hover */
+            background: #2f2723; /* Tonalità leggermente più scura all'hover */
         }
 
         /* Stile della "traccia" per Edge/IE */
@@ -272,16 +271,16 @@
     <script>
         // Mappa del codice Morse (maiuscole, numeri, punteggiatura comune)
         const morseCodeMap = {
-            'A': '•– ', 'B': ' –•••', 'C': ' –•–•', 'D': ' –••', 'E': '•', 'F': '••–•', 'G': ' – –•', 'H': '••••',
-            'I': '••', 'J': '•– – – ', 'K': ' –•– ', 'L': '•–••', 'M': ' – – ', 'N': ' –•', 'O': ' – – – ', 'P': '•– –•',
-            'Q': ' – –•–', 'R': '•–•', 'S': '•••', 'T': ' – ', 'U': '••– ', 'V': '•••– ', 'W': '•– – ', 'X': ' –••– ',
-            'Y': '–•– – ', 'Z': ' – –••',
-            '0': ' – – – – – ', '1': '•– – – – ', '2': '••– – – ', '3': '•••– – ', '4': '••••– ', '5': '•••••',
-            '6': ' –••••', '7': ' – –•••', '8': ' – – –••', '9': ' – – – –•',
-            '.': '•–•–•– ', ',': ' – –••– – ', '?': '••– –••', "'": '•– – – –•', '!': ' –•–•– – ', '/': ' –••–•',
-            '(': ' –•– –•', ')': ' –•––•– ', '&': '•–•••', ':': ' – – –•••', ';': ' –•–•–•', '=': ' –•••– ',
-            '+': '•–•–•', '-': ' –••••– ', '_': '••– –•– ', '"': '•–••–•', '$': '•••–••– ', '@': '•– –•–•',
-            ' ': ' ' // Spazio tra le parole
+            'A': '•–', 'B': '–•••', 'C': '–•–•', 'D': '–••', 'E': '•', 'F': '••–•', 'G': '––•', 'H': '••••',
+            'I': '••', 'J': '•–––', 'K': '–•–', 'L': '•–••', 'M': '––', 'N': '–•', 'O': '–––', 'P': '•––•',
+            'Q': '––•–', 'R': '•–•', 'S': '•••', 'T': '–', 'U': '••–', 'V': '•••–', 'W': '•––', 'X': '–••–',
+            'Y': '–•––', 'Z': '––••',
+            '0': '–––––', '1': '•––––', '2': '••–––', '3': '•••––', '4': '••••–', '5': '•••••',
+            '6': '–••••', '7': '––•••', '8': '–––••', '9': '––––•',
+            '.': '•–•–•–', ',': '––••––', '?': '••––••', "'": '•––––•', '!': '–•–•––', '/': '–••–•',
+            '(': '–•––•', ')': '–•––•–', '&': '•–•••', ':': '–––•••', ';': '–•–•–•', '=': '–•••–',
+            '+': '•–•–•', '-': '–••••–', '_': '••––•–', '"': '•–••–•', '$': '•••–••–', '@': '•––•–•',
+            ' ': '/' // Un singolo spazio tra parole è rappresentato da '/' per chiarezza e per riproduzione/conversione
         };
 
         // Inverti la mappa per la conversione da Morse a testo
@@ -346,7 +345,7 @@
                 const morseChar = morseCodeMap[char];
 
                 if (morseChar !== undefined) {
-                    morse += morseChar + ' '; // Aggiungi spazio tra i caratteri Morse
+                    morse += morseChar + ' '; // Aggiungi spazio tra i caratteri Morse per renderli leggibili
                     stepByStepHtml += `<p><span class="font-bold">${char}</span>: ${morseChar}</p>`;
                 } else {
                     // Gestisci caratteri non mappati
@@ -362,14 +361,21 @@
         function morseToText(morse) {
             let text = '';
             let stepByStepHtml = '';
-            // Dividi il codice Morse in singoli "caratteri" Morse, gestendo gli spazi tra le parole
-            const morseChars = morse.split(' ').filter(c => c !== ''); // Filtra spazi vuoti extra
+            // Dividi il codice Morse in singoli "caratteri" Morse.
+            // Usiamo una regex per dividere per uno o più spazi o per il simbolo '/' (che rappresenta lo spazio tra parole).
+            const morseChars = morse.split(/\s+|\//).filter(c => c !== '');
 
             for (let i = 0; i < morseChars.length; i++) {
                 const morseChar = morseChars[i];
-                if (morseChar === '') { // Questo caso dovrebbe essere gestito dal filter, ma per sicurezza
+                if (morseChar === '') {
+                    // Questo caso dovrebbe essere raro con il filter, ma se ci sono separatori consecutivi
+                    // o spazi extra nella input, potremmo voler aggiungere uno spazio.
+                    // Dato che '/' è il separatore di parola, se morseChar è vuoto dopo lo split,
+                    // significa che c'era uno spazio (o più) tra due simboli Morse.
+                    // Se l'input ha "A B" (con uno spazio vuoto nel mezzo), lo trattiamo come uno spazio.
+                    // Se l'input ha "A/B", l'effetto sarà lo stesso, perché "/" è mappato a spazio.
                     text += ' ';
-                    stepByStepHtml += `<p><span class="font-bold">[Spazio]</span>: (Separatore di parole)</p>`;
+                    stepByStepHtml += `<p><span class="font-bold">[Spazio]</span>: (Separatore di parola implicito/esplicito)</p>`;
                 } else {
                     const char = reverseMorseCodeMap[morseChar];
                     if (char !== undefined) {
@@ -382,7 +388,7 @@
                 }
             }
             stepByStepOutput.innerHTML = stepByStepHtml || '<p>I dettagli della conversione appariranno qui.</p>';
-            return text;
+            return text.toLowerCase(); // Converti il testo finale in minuscolo
         }
 
         // Testo a Codice ASCII (Decimal, Binary, Hex)
@@ -422,28 +428,27 @@
             const extractedValues = [];
 
             while ((match = regex.exec(cleanedInput)) !== null) {
-                // Il match conterrà i gruppi di cattura, solo uno sarà non-null per ogni match
                 let value = null;
-                let type = 'auto'; // Default type, se non specificato dal prefisso
+                let type = 'auto';
 
-                if (match[1]) { // Dec:
-                    value = match[1].substring(4).trim(); // Rimuovi 'Dec:' e spazi
+                if (match[1]) {
+                    value = match[1].substring(4).trim();
                     type = 'dec';
-                } else if (match[2]) { // Bin:
-                    value = match[2].substring(4).trim(); // Rimuovi 'Bin:' e spazi
+                } else if (match[2]) {
+                    value = match[2].substring(4).trim();
                     type = 'bin';
-                } else if (match[3]) { // Hex:
-                    value = match[3].substring(4).trim(); // Rimuovi 'Hex:' e spazi
+                } else if (match[3]) {
+                    value = match[3].substring(4).trim();
                     type = 'hex';
-                } else if (match[4]) { // 0x
-                    value = match[4].substring(2).trim(); // Rimuovi '0x'
+                } else if (match[4]) {
+                    value = match[4].substring(2).trim();
                     type = 'hex';
-                } else if (match[5]) { // 0b
-                    value = match[5].substring(2).trim(); // Rimuovi '0b'
+                } else if (match[5]) {
+                    value = match[5].substring(2).trim();
                     type = 'bin';
-                } else if (match[6]) { // Numero puro
+                } else if (match[6]) {
                     value = match[6].trim();
-                    type = 'auto'; // Sarà determinato in base al contenuto
+                    type = 'auto';
                 }
 
                 if (value) {
@@ -460,65 +465,53 @@
 
             for (const item of extractedValues) {
                 const tokenValue = item.value;
-                const tokenType = item.type; // Tipo suggerito dal prefisso o 'auto'
+                const tokenType = item.type;
                 let charCode;
-                let parsedAsType = 'Sconosciuto'; // Il tipo effettivo dopo il parsing
+                let parsedAsType = 'Sconosciuto';
 
                 if (tokenType === 'dec') {
                     charCode = parseInt(tokenValue, 10);
                     parsedAsType = 'Decimale (da prefisso)';
                 } else if (tokenType === 'bin') {
-                    // Controlla che sia un binario valido prima di parsare
                     if (/^[01]+$/.test(tokenValue)) {
                         charCode = parseInt(tokenValue, 2);
                         parsedAsType = 'Binario (da prefisso)';
                     } else {
-                        charCode = NaN; // Non è un binario valido
+                        charCode = NaN;
                     }
                 } else if (tokenType === 'hex') {
-                    // Controlla che sia un esadecimale valido
                     if (/^[0-9a-fA-F]+$/.test(tokenValue)) {
                         charCode = parseInt(tokenValue, 16);
                         parsedAsType = 'Esadecimale (da prefisso)';
                     } else {
-                        charCode = NaN; // Non è un esadecimale valido
+                        charCode = NaN;
                     }
                 }
-                // Logica per i token di tipo 'auto' (senza prefisso)
                 else if (tokenType === 'auto') {
-                    // Ordine di precedenza per i numeri puri: Binario > Esadecimale > Decimale
-                    // 1. Binario puro (solo 0/1, lunghezza tra 1 e 8 per evitare di confondere con decimali)
-                    if (/^[01]{1,8}$/.test(tokenValue) && (tokenValue.length > 1 || tokenValue === '0' || tokenValue === '1')) { // 1 o più cifre binarie
-                        // Per es. "101" dovrebbe essere binario (5) non decimale (101)
+                    if (/^[01]{1,8}$/.test(tokenValue) && (tokenValue.length > 1 || tokenValue === '0' || tokenValue === '1')) {
                         charCode = parseInt(tokenValue, 2);
                         parsedAsType = 'Binario (puro)';
                     }
-                    // 2. Esadecimale puro (contiene a-f o è un esadecimale valido a 1-2 cifre senza prefisso)
-                    // Questa è la condizione più delicata, per non confondere con i decimali
                     else if (/^[0-9a-fA-F]+$/.test(tokenValue) && (/[a-fA-F]/.test(tokenValue) || tokenValue.length <= 2)) {
-                        // Se ha lettere (es. "AB"), è sicuramente hex.
-                        // Se è solo cifre ma è breve (es. "41"), consideralo hex se non è un binario puro.
-                        // La lunghezza <= 2 è euristica per i char ASCII.
                         charCode = parseInt(tokenValue, 16);
                         parsedAsType = 'Esadecimale (puro)';
                     }
-                    // 3. Decimale puro (ultima spiaggia, solo cifre)
                     else if (/^\d+$/.test(tokenValue)) {
                         charCode = parseInt(tokenValue, 10);
                         parsedAsType = 'Decimale (puro)';
                     }
                     else {
-                        charCode = NaN; // Non è un formato numerico riconosciuto
+                        charCode = NaN;
                         parsedAsType = 'Non riconosciuto';
                     }
                 }
 
-                if (!isNaN(charCode) && charCode >= 0 && charCode <= 255) { // Range ASCII valido
+                if (!isNaN(charCode) && charCode >= 0 && charCode <= 255) {
                     const char = String.fromCharCode(charCode);
                     text += char;
                     stepByStepHtml += `<p><span class="font-bold">${tokenValue}</span> (Parsed as ${parsedAsType}): '${char}' (Dec: ${charCode}, Bin: ${charCode.toString(2).padStart(8, '0')}, Hex: ${charCode.toString(16).toUpperCase()})</p>`;
                 } else {
-                    text += '[?]'; // Carattere non riconosciuto o fuori range
+                    text += '[?]';
                     stepByStepHtml += `<p><span class="font-bold text-red-500">${tokenValue}</span>: Valore "${tokenValue}" non valido o fuori intervallo ASCII</p>`;
                 }
             }
@@ -529,19 +522,14 @@
         // Gestione Audio Morse
         function initAudioContext() {
             if (!audioContext) {
-                // Crea AudioContext solo se non esiste
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 gainNode = audioContext.createGain();
                 gainNode.connect(audioContext.destination);
-                gainNode.gain.value = volumeControl.value; // Imposta il volume iniziale
+                gainNode.gain.value = volumeControl.value;
                 console.log('AudioContext e GainNode inizializzati.');
             }
 
-            // Aggiungi un listener per riprendere l'audio context se è sospeso
-            // Questo è necessario per molti browser che richiedono un'interazione utente
-            // per avviare l'audio.
             if (audioContext.state === 'suspended') {
-                // Tentativo di riprendere l'audio context solo una volta
                 audioContext.resume().then(() => {
                     console.log('AudioContext ripreso con successo.');
                 }).catch(e => console.error('Errore nel riprendere AudioContext:', e));
@@ -556,7 +544,6 @@
                     return;
                 }
 
-                // Ferma e disconnetti l'oscillatore precedente se esiste
                 if (oscillator) {
                     try {
                         oscillator.stop(0);
@@ -569,7 +556,7 @@
                 }
 
                 oscillator = audioContext.createOscillator();
-                oscillator.type = 'sine'; // Sine wave for a clear tone
+                oscillator.type = 'sine';
                 oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
                 oscillator.connect(gainNode);
 
@@ -577,10 +564,10 @@
                 console.log(`Riproduco tono per ${duration}ms alla frequenza ${frequency}Hz.`);
 
                 currentTimeout = setTimeout(() => {
-                    if (oscillator) { // Assicurati che l'oscillatore esista ancora
+                    if (oscillator) {
                         oscillator.stop(audioContext.currentTime);
                         oscillator.disconnect();
-                        oscillator = null; // Rimuovi il riferimento all'oscillatore
+                        oscillator = null;
                         console.log('Tono fermato.');
                     }
                     resolve();
@@ -589,7 +576,6 @@
         }
 
         async function playMorseCode(morseString) {
-            // Inizializza l'AudioContext al click del pulsante play
             initAudioContext();
             if (!audioContext) {
                 showMessage('Impossibile inizializzare l\'audio. Controlla le impostazioni del browser.', 'error');
@@ -601,55 +587,56 @@
             stopMorseBtn.disabled = false;
             console.log('Avvio riproduzione Morse. isPlaying:', isPlaying);
 
-            const dotDuration = parseInt(speedControl.value); // Durata di un "punto" in ms
-            const dashDuration = dotDuration * 3; // Durata di una "linea"
+            const dotDuration = parseInt(speedControl.value);
+            const dashDuration = dotDuration * 3;
             const charSpaceDuration = dotDuration; // Spazio tra i simboli all'interno di una lettera
-            const letterSpaceDuration = dotDuration * 3; // Spazio tra le lettere
+            const letterSpaceDuration = dotDuration * 3; // Spazio tra le lettere (al posto di quello nella mappa)
             const wordSpaceDuration = dotDuration * 7; // Spazio tra le parole
 
-            const morseSequence = morseString.split(' '); // Divide in lettere/parole
+            // Ho modificato la funzione `textToMorse` per aggiungere uno spazio tra i simboli Morse di ogni carattere
+            // e '/' per lo spazio tra le parole.
+            // Quindi, ora dobbiamo splittare considerando questi separatori.
+            const tokens = morseString.split(' ').filter(token => token !== ''); // Prima splitto per gli spazi
 
             try {
-                for (let i = 0; i < morseSequence.length; i++) {
+                for (let i = 0; i < tokens.length; i++) {
                     if (!isPlaying) {
                         console.log('Riproduzione interrotta dall\'utente.');
                         break;
                     }
-                    const char = morseSequence[i];
+                    const token = tokens[i];
 
-                    if (char === '') { // Gestisce spazi extra che genererebbero token vuoti
-                        console.log('Pausa tra parole (spazio extra):', wordSpaceDuration, 'ms');
+                    if (token === '/') { // Il nostro separatore di parola esplicito
+                        console.log('Pausa tra parole (separatore /):', wordSpaceDuration, 'ms');
                         await new Promise(resolve => setTimeout(resolve, wordSpaceDuration));
                     } else {
-                        for (let j = 0; j < char.length; j++) {
+                        // Riproduci i simboli del carattere Morse
+                        for (let j = 0; j < token.length; j++) {
                             if (!isPlaying) {
                                 console.log('Riproduzione interrotta dall\'utente.');
                                 break;
                             }
-                            const symbol = char[j];
+                            const symbol = token[j];
                             if (symbol === '•') {
                                 await playTone(dotDuration);
                             } else if (symbol === '–') {
                                 await playTone(dashDuration);
                             }
-                            // Spazio tra i simboli all'interno di una lettera
-                            if (j < char.length - 1 && isPlaying) { // Aggiungi isPlaying qui per fermare immediatamente
-                                await new Promise(resolve => {
-                                    currentTimeout = setTimeout(resolve, charSpaceDuration);
-                                });
+                            // Aggiungi una breve pausa tra i simboli della stessa lettera, se non è l'ultimo simbolo
+                            if (j < token.length - 1 && isPlaying) {
+                                await new Promise(resolve => setTimeout(resolve, charSpaceDuration));
                             }
                         }
-                        // Spazio tra le lettere
-                        if (i < morseSequence.length - 1 && isPlaying) { // Aggiungi isPlaying qui per fermare immediatamente
-                            await new Promise(resolve => {
-                                currentTimeout = setTimeout(resolve, letterSpaceDuration);
-                            });
+                        // Aggiungi pausa tra le lettere, se non è l'ultima lettera e non è seguita da un separatore di parola
+                        if (i < tokens.length - 1 && isPlaying && tokens[i+1] !== '/') {
+                            await new Promise(resolve => setTimeout(resolve, letterSpaceDuration));
                         }
                     }
                 }
+                showMessage('Riproduzione Codice Morse completata!', 'success');
             } catch (error) {
                 console.error('Errore durante la riproduzione del codice Morse:', error);
-                showMessage('Errore durante la riproduzione audio: ' + error.message, 'error');
+                showMessage('Errore durante la riproduzione audio.', 'error');
             } finally {
                 isPlaying = false;
                 playMorseBtn.disabled = false;
@@ -660,45 +647,39 @@
                         oscillator.disconnect();
                         oscillator = null;
                     } catch (e) {
-                        console.error('Errore finale nello stop dell\'oscillatore:', e);
+                        console.error('Errore nel fermare l\'oscillatore finale:', e);
                     }
                 }
-                if (currentTimeout) {
-                    clearTimeout(currentTimeout);
-                    currentTimeout = null;
-                }
-                console.log('Riproduzione Morse terminata. isPlaying:', isPlaying);
+                clearTimeout(currentTimeout); // Pulisci qualsiasi timeout residuo
             }
         }
 
-        function stopMorsePlayback() {
-            console.log('Tentativo di stop riproduzione Morse.');
+        function stopMorseCode() {
             isPlaying = false;
+            playMorseBtn.disabled = false;
+            stopMorseBtn.disabled = true;
             if (oscillator) {
                 try {
-                    oscillator.stop(0); // Stop immediately
+                    oscillator.stop();
                     oscillator.disconnect();
-                    console.log('Oscillatore fermato e disconnesso.');
+                    oscillator = null;
                 } catch (e) {
-                    console.error('Errore nello stop dell\'oscillatore:', e);
+                    console.error('Errore durante l\'interruzione dell\'oscillatore:', e);
                 }
-                oscillator = null;
             }
             if (currentTimeout) {
                 clearTimeout(currentTimeout);
                 currentTimeout = null;
-                console.log('Timeout per la riproduzione cancellato.');
             }
-            playMorseBtn.disabled = false;
-            stopMorseBtn.disabled = true;
-            showMessage('Riproduzione Morse interrotta.', 'info');
+            console.log('Riproduzione Morse interrotta.');
+            showMessage('Riproduzione audio interrotta.', 'info');
         }
 
-        // Listeners degli Eventi
+        // Gestori di Eventi per i Pulsanti
         convertToMorseBtn.addEventListener('click', () => {
             const text = inputText.value;
             if (text.trim() === '') {
-                showMessage('Per favore, inserisci del testo da convertire in Morse.', 'error');
+                showMessage('Per favore, inserisci del testo da convertire in Morse.', 'info');
                 return;
             }
             const morse = textToMorse(text);
@@ -709,7 +690,7 @@
         convertToAsciiBtn.addEventListener('click', () => {
             const text = inputText.value;
             if (text.trim() === '') {
-                showMessage('Per favor, inserisci del testo da convertire in ASCII.', 'error');
+                showMessage('Per favore, inserisci del testo da convertire in ASCII.', 'info');
                 return;
             }
             const ascii = textToAscii(text);
@@ -717,106 +698,93 @@
             showMessage('Testo convertito in Codice ASCII!', 'success');
         });
 
+        // Questo è il gestore di eventi per "Converti da Morse a Testo"
         convertMorseToTextBtn.addEventListener('click', () => {
             const morse = inputText.value;
             if (morse.trim() === '') {
-                showMessage('Per favore, inserisci del Codice Morse da convertire in testo.', 'error');
+                showMessage('Per favore, inserisci del codice Morse da convertire in testo.', 'info');
                 return;
             }
-            // Aggiungi una validazione per i nuovi simboli nel morseToText
-            if (!morse.match(/^[•– ]+$/)) {
-                showMessage('L\'input Morse deve contenere solo "•", "–" e spazi.', 'error');
-                return;
-            }
-            const text = morseToText(morse);
+            const text = morseToText(morse); // La funzione ora restituisce minuscole
             outputText.value = text;
-            showMessage('Codice Morse convertito in testo!', 'success');
+            showMessage('Codice Morse convertito in Testo!', 'success');
         });
 
         convertAsciiToTextBtn.addEventListener('click', () => {
             const ascii = inputText.value;
             if (ascii.trim() === '') {
-                showMessage('Per favore, inserisci del Codice ASCII da convertire in testo.', 'error');
+                showMessage('Per favore, inserisci del codice ASCII da convertire in testo.', 'info');
                 return;
             }
             const text = asciiToText(ascii);
             outputText.value = text;
-            showMessage('Codice ASCII convertito in testo!', 'success');
+            showMessage('Codice ASCII convertito in Testo!', 'success');
         });
 
         copyToClipboardBtn.addEventListener('click', () => {
-            const textToCopy = outputText.value;
-            if (textToCopy.trim() === '') {
-                showMessage('Nessun testo da copiare.', 'error');
-                return;
-            }
-            // Usa l'API Clipboard moderna se disponibile, altrimenti fallback
+            outputText.select();
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(textToCopy)
-                    .then(() => showMessage('Testo copiato nel blocco note!', 'success'))
+                navigator.clipboard.writeText(outputText.value)
+                    .then(() => showMessage('Risultato copiato negli appunti!', 'success'))
                     .catch(err => {
-                        console.error('Errore durante la copia con Clipboard API:', err);
-                        fallbackCopyTextToClipboard(textToCopy);
+                        console.error('Errore nel copiare negli appunti:', err);
+                        showMessage('Impossibile copiare il testo. Prova a selezionarlo manualmente.', 'error');
                     });
             } else {
-                fallbackCopyTextToClipboard(textToCopy);
+                try {
+                    document.execCommand('copy');
+                    showMessage('Risultato copiato negli appunti!', 'success');
+                } catch (err) {
+                    console.error('Fallback: Impossibile copiare il testo.', err);
+                    showMessage('Impossibile copiare il testo. Prova a selezionarlo manualmente.', 'error');
+                }
             }
         });
 
-        function fallbackCopyTextToClipboard(textToCopy) {
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = textToCopy;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showMessage('Testo copiato nel blocco note (fallback)!', 'success');
-                } else {
-                    showMessage('Impossibile copiare il testo (fallback).', 'error');
-                }
-            } catch (err) {
-                showMessage('Errore durante la copia (fallback): ' + err, 'error');
-            }
-            document.body.removeChild(tempTextArea);
-        }
-
+        // Gestione Audio
         playMorseBtn.addEventListener('click', () => {
-            const morseToPlay = outputText.value;
-            // Aggiorna la regex per i nuovi simboli
-            if (morseToPlay.trim() === '' || !morseToPlay.match(/^[•– ]+$/)) {
-                showMessage('Per favor, converti prima il testo in Codice Morse (con "•" e "–") per riprodurre l\'audio.', 'error');
+            const morse = outputText.value; // Riproduci il codice Morse dall'output
+            if (morse.trim() === '') {
+                showMessage('Non c\'è codice Morse da riprodurre. Converti prima del testo!', 'info');
                 return;
             }
-            playMorseCode(morseToPlay);
-            showMessage('Riproduzione Codice Morse avviata...', 'info');
+            playMorseCode(morse);
         });
 
-        stopMorseBtn.addEventListener('click', stopMorsePlayback);
+        stopMorseBtn.addEventListener('click', stopMorseCode);
 
         volumeControl.addEventListener('input', () => {
             if (gainNode) {
-                gainNode.gain.value = parseFloat(volumeControl.value); // Assicurati che sia un float
+                gainNode.gain.value = volumeControl.value;
             }
-            // Aggiorna la traccia riempita per WebKit
-            const percent = (volumeControl.value - volumeControl.min) / (volumeControl.max - volumeControl.min) * 100;
-            volumeControl.style.setProperty('--track-fill-percent', `${percent}%`);
         });
 
         speedControl.addEventListener('input', () => {
             speedValueSpan.textContent = `${speedControl.value} ms`;
-            // Aggiorna la traccia riempita per WebKit
+            // Quando la velocità cambia, ferma la riproduzione corrente se attiva per applicare subito la nuova velocità
+            if (isPlaying) {
+                stopMorseCode();
+                showMessage('Velocità cambiata. Riavvia la riproduzione.', 'info');
+            }
+            // Aggiorna la variabile CSS personalizzata per WebKit per la traccia di riempimento
             const percent = (speedControl.value - speedControl.min) / (speedControl.max - speedControl.min) * 100;
             speedControl.style.setProperty('--track-fill-percent', `${percent}%`);
+            volumeControl.style.setProperty('--track-fill-percent', `${volumeControl.value * 100}%`);
         });
 
-        // Inizializza il valore della velocità
+        // Funzione per inizializzare lo stile della traccia riempita al caricamento della pagina
+        function initializeTrackFill() {
+            const speedPercent = (speedControl.value - speedControl.min) / (speedControl.max - speedControl.min) * 100;
+            speedControl.style.setProperty('--track-fill-percent', `${speedPercent}%`);
+            const volumePercent = volumeControl.value * 100;
+            volumeControl.style.setProperty('--track-fill-percent', `${volumePercent}%`);
+        }
+
+        // Inizializza il valore visualizzato della velocità all'avvio
         speedValueSpan.textContent = `${speedControl.value} ms`;
 
-        // Inizializza la traccia riempita al caricamento della pagina per entrambi gli slider
-        volumeControl.dispatchEvent(new Event('input'));
-        speedControl.dispatchEvent(new Event('input'));
-
+        // Chiamare la funzione all'avvio per impostare la traccia riempita iniziale
+        document.addEventListener('DOMContentLoaded', initializeTrackFill);
     </script>
 </body>
 </html>
