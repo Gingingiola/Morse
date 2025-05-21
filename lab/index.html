@@ -271,15 +271,15 @@
     <script>
         // Mappa del codice Morse (maiuscole, numeri, punteggiatura comune)
         const morseCodeMap = {
-            'A': '•–', 'B': '–•••', 'C': '–•–•', 'D': '–••', 'E': '•', 'F': '••–•', 'G': '––•', 'H': '••••',
-            'I': '••', 'J': '•–––', 'K': '–•–', 'L': '•–••', 'M': '––', 'N': '–•', 'O': '–––', 'P': '•––•',
-            'Q': '––•–', 'R': '•–•', 'S': '•••', 'T': '–', 'U': '••–', 'V': '•••–', 'W': '•––', 'X': '–••–',
-            'Y': '–•––', 'Z': '––••',
-            '0': '–––––', '1': '•––––', '2': '••–––', '3': '•••––', '4': '••••–', '5': '•••••',
-            '6': '–••••', '7': '––•••', '8': '–––••', '9': '––––•',
-            '.': '•–•–•–', ',': '––••––', '?': '••––••', "'": '•––––•', '!': '–•–•––', '/': '–••–•',
-            '(': '–•––•', ')': '–•––•–', '&': '•–•••', ':': '–––•••', ';': '–•–•–•', '=': '–•••–',
-            '+': '•–•–•', '-': '–••••–', '_': '••––•–', '"': '•–••–•', '$': '•••–••–', '@': '•––•–•',
+            'A': '•– ', 'B': ' –•••', 'C': ' –•–•', 'D': ' –••', 'E': '•', 'F': '••–•', 'G': ' – –•', 'H': '••••',
+            'I': '••', 'J': '•– – – ', 'K': ' –•– ', 'L': '•–••', 'M': ' – – ', 'N': ' –•', 'O': ' – – – ', 'P': '•– –•',
+            'Q': ' – –•– ', 'R': '•–•', 'S': '•••', 'T': ' – ', 'U': '••– ', 'V': '•••– ', 'W': '•– – ', 'X': ' –••– ',
+            'Y': ' –•– – ', 'Z': ' – –••',
+            '0': ' – – – – – ', '1': '•– – – – ', '2': '••– – – ', '3': '•••– – ', '4': '••••– ', '5': '•••••',
+            '6': ' –••••', '7': ' – –•••', '8': ' – – –••', '9': ' – – – –•',
+            '.': '•–•–•– ', ',': ' – –••– – ', '?': '••– –••', "'": '•– – – –•', '!': ' –•–•– – ', '/': ' –••–•',
+            '(': ' –•––•', ')': ' –•––•– ', '&': '•–•••', ':': ' – – –•••', ';': ' –•–•–•', '=': ' –•••– ',
+            '+': '•–•–•', '-': ' –••••–', '_': '••– –•– ', '"': '•–••–•', '$': '•••–••– ', '@': '•– –•–•',
             ' ': '/' // Un singolo spazio tra parole è rappresentato da '/' per chiarezza e per riproduzione/conversione
         };
 
@@ -568,7 +568,6 @@
                         oscillator.stop(audioContext.currentTime);
                         oscillator.disconnect();
                         oscillator = null;
-                        console.log('Tono fermato.');
                     }
                     resolve();
                 }, duration);
@@ -757,6 +756,9 @@
             if (gainNode) {
                 gainNode.gain.value = volumeControl.value;
             }
+            // Aggiorna la variabile CSS personalizzata per WebKit per la traccia di riempimento del volume
+            const percent = (volumeControl.value - volumeControl.min) / (volumeControl.max - volumeControl.min) * 100;
+            volumeControl.style.setProperty('--track-fill-percent', `${percent}%`);
         });
 
         speedControl.addEventListener('input', () => {
@@ -766,17 +768,17 @@
                 stopMorseCode();
                 showMessage('Velocità cambiata. Riavvia la riproduzione.', 'info');
             }
-            // Aggiorna la variabile CSS personalizzata per WebKit per la traccia di riempimento
+            // Aggiorna la variabile CSS personalizzata per WebKit per la traccia di riempimento della velocità
             const percent = (speedControl.value - speedControl.min) / (speedControl.max - speedControl.min) * 100;
             speedControl.style.setProperty('--track-fill-percent', `${percent}%`);
-            volumeControl.style.setProperty('--track-fill-percent', `${volumeControl.value * 100}%`);
         });
 
         // Funzione per inizializzare lo stile della traccia riempita al caricamento della pagina
         function initializeTrackFill() {
             const speedPercent = (speedControl.value - speedControl.min) / (speedControl.max - speedControl.min) * 100;
             speedControl.style.setProperty('--track-fill-percent', `${speedPercent}%`);
-            const volumePercent = volumeControl.value * 100;
+
+            const volumePercent = (volumeControl.value - volumeControl.min) / (volumeControl.max - volumeControl.min) * 100;
             volumeControl.style.setProperty('--track-fill-percent', `${volumePercent}%`);
         }
 
