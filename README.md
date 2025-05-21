@@ -8,4 +8,4 @@
 
 ## Laboratorio interattivo sul codice Morse / ARCII : 
 
-## [Laboratori](https://gingingiola.github.io/Morse/lab/index.html)  
+## [Laboratorio](https://gingingiola.github.io/Morse/lab/index.html)  
