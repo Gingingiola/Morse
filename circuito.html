@@ -50,14 +50,14 @@
         let rightTerminalRotationAngle = 0;
         let rightTerminalTargetAngle = 0;
         const RIGHT_TERMINAL_OFF_ANGLE = -31; // Angolo "aperto" per il terminale destro
-        const RIGHT_TERMINAL_ON_ANGLE = -10; // Angolo "chiuso" per il terminale destro
+        const RIGHT_TERMINAL_ON_ANGLE = -8; // Angolo "chiuso" per il terminale destro (calibrato per toccare)
 
         // Variabili per lo stato dell'animazione del terminale SINISTRO
         let isLeftCircuitOn = false; // Stato: true = acceso, false = spento (terminale sinistro)
         let leftTerminalRotationAngle = 0;
         let leftTerminalTargetAngle = 0;
-        const LEFT_TERMINAL_OFF_ANGLE = -34; // Angolo "aperto" per il terminale sinistro (originale)
-        const LEFT_TERMINAL_ON_ANGLE = -15; // Angolo "chiuso" per il terminale sinistro (da calibrare per toccare)
+        const LEFT_TERMINAL_OFF_ANGLE = -34; // Angolo "aperto" per il terminale sinistro
+        const LEFT_TERMINAL_ON_ANGLE = -8; // Angolo "chiuso" per il terminale sinistro (calibrato per toccare)
 
         const TERMINAL_ROTATION_SPEED = 0.1; // Velocità di interpolazione per la rotazione (0.0-1.0)
 
@@ -164,16 +164,18 @@
           let mouseYScaled = mouseY / GLOBAL_SCALE_FACTOR;
 
           // Area cliccabile per il terminale DESTRO
-          const clickableRightTerminalX = 300;
-          const clickableRightTerminalY = 0;
-          const clickableRightTerminalWidth = 70;
-          const clickableRightTerminalHeight = 30;
+          // Considera il pivot e aggiungi un margine per una migliore interazione
+          const clickableRightTerminalX = TERMINAL_RIGHT_PIVOT_X - TERMINAL_RIGHT_RECT_WIDTH;
+          const clickableRightTerminalY = TERMINAL_RIGHT_PIVOT_Y - (TERMINAL_RIGHT_RECT_HEIGHT / 2) - 10;
+          const clickableRightTerminalWidth = TERMINAL_RIGHT_RECT_WIDTH + 15; // Aumento larghezza
+          const clickableRightTerminalHeight = TERMINAL_RIGHT_RECT_HEIGHT + 20; // Aumento altezza
 
           // Area cliccabile per il terminale SINISTRO
-          const clickableLeftTerminalX = 100;
-          const clickableLeftTerminalY = 0;
-          const clickableLeftTerminalWidth = 70;
-          const clickableLeftTerminalHeight = 30;
+          // Considera il pivot e aggiungi un margine per una migliore interazione
+          const clickableLeftTerminalX = TERMINAL_LEFT_PIVOT_X - 10; // Sposta leggermente a sinistra del pivot
+          const clickableLeftTerminalY = TERMINAL_LEFT_PIVOT_Y - (TERMINAL_LEFT_RECT_HEIGHT / 2) - 10;
+          const clickableLeftTerminalWidth = TERMINAL_LEFT_RECT_WIDTH + 15; // Aumento larghezza
+          const clickableLeftTerminalHeight = TERMINAL_LEFT_RECT_HEIGHT + 20; // Aumento altezza
 
 
           // Gestione click terminale DESTRO
