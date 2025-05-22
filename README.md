@@ -6,7 +6,7 @@
 
 ## [Morse.pdf](Morse.pdf)  
 
-## Laboratorio interattivo sul codice Morse / ARCII : 
+## Laboratorio interattivo sul codice Morse / ASCII : 
 
 ## [Laboratorio](https://gingingiola.github.io/Morse/lab/index.html)  
 
